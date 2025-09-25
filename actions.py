@@ -20,7 +20,7 @@ def open_app(app_name: str):
         return f"App '{app_name}' is not in the known apps list."
 
     try:
-        subprocess.Popen([cmd])
+        subprocess.Popen([cmd], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return f"Opening {app_name}..."
     except FileNotFoundError:
         return f"Could not open {app_name}. Command '{cmd}' not found."

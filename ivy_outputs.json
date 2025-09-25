@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-09-25T23:50:44.491230",
-  "prompt": "open chrome",
+  "timestamp": "2025-09-26T00:21:07.877486",
+  "prompt": "open spotify",
   "output": {
     "action": "open_app",
     "params": {
-      "app_name": "chrome"
+      "app_name": "spotify"
     },
-    "response": "Okay, opening Chrome for you!"
+    "response": "Okay, opening Spotify for you!"
   }
 }

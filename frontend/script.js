@@ -87,6 +87,7 @@ class GradientOrbApp {
             case ' ':
                 e.preventDefault();
                 this.onOrbClick();
+                ipcRenderer.send("run-python");
                 break;
             case 'p':
                 this.toggleParticles();

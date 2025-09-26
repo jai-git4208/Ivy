@@ -1,7 +1,7 @@
 import ollama
 import json
 from datetime import datetime
-from actions import open_app  # your offline app executor
+from actions import open_app, keyboard_action  # your offline app executor and keyboard function
 import requests
 import tempfile
 import os
@@ -26,7 +26,6 @@ def speak_murf(text: str):
     try:
         res = murf_client.text_to_speech.generate(text=text, voice_id=MURF_VOICE_ID)
         audio_url = res.audio_file
-
         response = requests.get(audio_url)
         response.raise_for_status()
 
@@ -79,6 +78,25 @@ def query_ivy(prompt: str):
                 log(f"Executed open_app: {result_msg}", 200)
             else:
                 log("No app_name provided for open_app.", 404)
+
+        # Execute keyboard action if requested
+        if parsed.get("action") == "type":
+            params = parsed.get("params", {})
+            text = params.get("text", "")
+            keys = params.get("keys", "")
+            delay = params.get("delay", 0.1)
+            keyboard_type = params.get("type", "type")  # type, keys, or type_enter
+            
+            if keyboard_type == "type" and text:
+                result_msg = keyboard_action("type", text=text, delay=delay)
+            elif keyboard_type == "keys" and keys:
+                result_msg = keyboard_action("keys", keys=keys)
+            elif keyboard_type == "type_enter" and text:
+                result_msg = keyboard_action("type_enter", text=text, delay=delay)
+            else:
+                result_msg = "Invalid keyboard action parameters."
+            
+            log(f"Executed keyboard action: {result_msg}", 200)
 
         # Save latest output
         log_entry = {

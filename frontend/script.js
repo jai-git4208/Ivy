@@ -1,4 +1,4 @@
-
+const { ipcRenderer } = require("electron");
 class GradientOrbApp {
     constructor() {
         this.orb = document.getElementById('gradientOrb');

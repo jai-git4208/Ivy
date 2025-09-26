@@ -1,13 +1,14 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { spawn } = require('child_process');
 
 function createWindow() {
     const win = new BrowserWindow({
         width: 400,
         height: 400,
-        transparent: true,   // Makes the window background transparent
-        frame: false,        // Removes the title bar and borders
-        alwaysOnTop: true,   // Window stays on top of others
+        transparent: true,
+        frame: false,
+        alwaysOnTop: true,
         resizable: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -17,10 +18,32 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
-
-    // Enable moving the window by dragging the orb
-    // We'll use CSS -webkit-app-region: drag on the draggable element
 }
+
+ipcMain.on('run-python', () => {
+    console.log('⚡ Running app.py in venv (logs shown below)...');
+
+    const venvPython = '/home/jaimin-pansal/Ivy/venv/bin/python';
+    const appPath = '/home/jaimin-pansal/Ivy/app.py';
+
+    const pythonProcess = spawn(venvPython, ['-u', appPath], {
+        cwd: path.dirname(appPath)
+    });
+
+    // Print stdout in real-time
+    pythonProcess.stdout.on('data', (data) => {
+        process.stdout.write(`🐍 stdout: ${data}`);
+    });
+
+    // Print stderr in real-time
+    pythonProcess.stderr.on('data', (data) => {
+        process.stderr.write(`🐍 stderr: ${data}`);
+    });
+
+    pythonProcess.on('close', (code) => {
+        console.log(`🐍 app.py exited with code ${code}`);
+    });
+});
 
 app.whenReady().then(createWindow);
 

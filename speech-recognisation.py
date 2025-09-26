@@ -16,3 +16,5 @@ def listen():
     except sr.RequestError as e:
         print(f"API error: {e}")
         return ""
+    
+listen()

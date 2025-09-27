@@ -133,3 +133,17 @@ def open_app(app_name: str):
         return f"Could not open {app_name}. Command '{cmd}' not found."
     except Exception as e:
         return f"Error opening {app_name}: {e}"
+    
+def take_screenshot():
+    """
+    Takes a screenshot and saves it to the specified path.
+    save_path: file path to save the screenshot (default 'screenshot.png')
+    """
+    save_path = "/home/jaimin-pansal/Ivy/screenshot.png"
+    try:
+        screenshot = pyautogui.screenshot()
+        screenshot.save(save_path)
+        return f"{save_path}"
+    except Exception as e:
+        return f"Error taking screenshot: {e}"
+print(take_screenshot())

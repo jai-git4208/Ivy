@@ -106,12 +106,3 @@ def open_app(app_name: str):
         return f"Could not open {app_name}. Command '{cmd}' not found."
     except Exception as e:
         return f"Error opening {app_name}: {e}"
-
-
-    
-# Example usage
-if __name__ == "__main__":
-    
-    time.sleep(2)  # Wait for the app to open
-    print("typing 'Hello, World!'")
-    keyboard_action("type", text="Hello, World!", delay=0.1)

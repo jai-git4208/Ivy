@@ -20,14 +20,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%; 
+    border-radius: 100%; 
     background: rgba(0,0,0,0);
 }
 
 .gradient-orb {
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
     position: relative;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -92,7 +92,7 @@ body {
     bottom: -120px;
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
+    width: 60px;
     height: 60px;
     background: radial-gradient(
         ellipse,
@@ -174,8 +174,8 @@ body {
 /* Responsive design */
 @media (max-width: 768px) {
     .gradient-orb {
-        width: 300px;
-        height: 300px;
+        width: 200px;
+        height: 200px;
     }
     
     .hello-text {
@@ -192,8 +192,8 @@ body {
 
 @media (max-width: 480px) {
     .gradient-orb {
-        width: 250px;
-        height: 250px;
+        width: 200px;
+        height: 200px;
     }
     
     .hello-text {

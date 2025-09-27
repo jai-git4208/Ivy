@@ -2,10 +2,12 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 
+let space = false; // keep as let so we can modify it
+
 function createWindow() {
     const win = new BrowserWindow({
-        width: 400,
-        height: 400,
+        width: 600,
+        height: 600,
         transparent: true,
         frame: false,
         alwaysOnTop: true,
@@ -20,30 +22,36 @@ function createWindow() {
     win.loadFile('index.html');
 }
 
-ipcMain.on('run-python', () => {
-    console.log('⚡ Running app.py in venv (logs shown below)...');
+// Only register ipcMain listener if space is false
+if (!space) {
+    ipcMain.on('run-python', () => {
+        // flip space to true on first call
+        space = true;
 
-    const venvPython = '/home/jaimin-pansal/Ivy/venv/bin/python';
-    const appPath = '/home/jaimin-pansal/Ivy/app.py';
+        console.log('⚡ Running app.py in venv (logs shown below)...');
 
-    const pythonProcess = spawn(venvPython, ['-u', appPath], {
-        cwd: path.dirname(appPath)
+        const venvPython = '/home/jaimin-pansal/Ivy/venv/bin/python';
+        const appPath = '/home/jaimin-pansal/Ivy/app.py';
+
+        const pythonProcess = spawn(venvPython, ['-u', appPath], {
+            cwd: path.dirname(appPath)
+        });
+
+        // Print stdout in real-time
+        pythonProcess.stdout.on('data', (data) => {
+            process.stdout.write(`🐍 stdout: ${data}`);
+        });
+
+        // Print stderr in real-time
+        pythonProcess.stderr.on('data', (data) => {
+            process.stderr.write(`🐍 stderr: ${data}`);
+        });
+
+        pythonProcess.on('close', (code) => {
+            console.log(`🐍 app.py exited with code ${code}`);
+        });
     });
-
-    // Print stdout in real-time
-    pythonProcess.stdout.on('data', (data) => {
-        process.stdout.write(`🐍 stdout: ${data}`);
-    });
-
-    // Print stderr in real-time
-    pythonProcess.stderr.on('data', (data) => {
-        process.stderr.write(`🐍 stderr: ${data}`);
-    });
-
-    pythonProcess.on('close', (code) => {
-        console.log(`🐍 app.py exited with code ${code}`);
-    });
-});
+}
 
 app.whenReady().then(createWindow);
 

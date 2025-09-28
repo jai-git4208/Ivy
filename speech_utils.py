@@ -3,9 +3,9 @@ import speech_recognition as sr
 def listen():
     r = sr.Recognizer()
     # Adjust these values to be more sensitive to silence
-    r.energy_threshold = 300  # Higher = less sensitive to quiet sounds
+    r.energy_threshold = 900  # Higher = less sensitive to quiet sounds
     r.dynamic_energy_threshold = False  # Don't auto-adjust
-    r.pause_threshold = 0.8  # Seconds of silence before considering phrase complete
+    r.pause_threshold = 4  # Seconds of silence before considering phrase complete
     
     with sr.Microphone() as source:
         print("Listening...")

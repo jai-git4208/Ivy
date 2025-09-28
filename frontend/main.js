@@ -2,10 +2,11 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 
-let space = false; // keep as let so we can modify it
+let space = false; 
+let win; // keep reference to the window
 
 function createWindow() {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 600,
         height: 600,
         transparent: true,
@@ -22,10 +23,8 @@ function createWindow() {
     win.loadFile('index.html');
 }
 
-// Only register ipcMain listener if space is false
 if (!space) {
     ipcMain.on('run-python', () => {
-        // flip space to true on first call
         space = true;
 
         console.log('⚡ Running app.py in venv (logs shown below)...');
@@ -37,12 +36,33 @@ if (!space) {
             cwd: path.dirname(appPath)
         });
 
-        // Print stdout in real-time
+        // Handle stdout
         pythonProcess.stdout.on('data', (data) => {
-            process.stdout.write(`🐍 stdout: ${data}`);
+            const text = data.toString().trim();
+            process.stdout.write(`🐍 stdout: ${text}\n`);
+
+            try {
+                const json = JSON.parse(text);
+
+                if (json.output && json.output.movement && win) {
+                    const { x, y } = json.output.movement;
+
+                    // get current window bounds
+                    const bounds = win.getBounds();
+
+                    // move relative to current position
+                    win.setBounds({
+                        x: bounds.x + x,
+                        y: bounds.y + y,
+                        width: bounds.width,
+                        height: bounds.height
+                    });
+                }
+            } catch (err) {
+                // not JSON, ignore
+            }
         });
 
-        // Print stderr in real-time
         pythonProcess.stderr.on('data', (data) => {
             process.stderr.write(`🐍 stderr: ${data}`);
         });

@@ -13,7 +13,7 @@ MODEL_NAME = "Ivy"
 LOG_FILE = "ivy_outputs.json"
 
 # Initialize Murf client
-murf_client = Murf(api_key=os.getenv("MURF_API_KEY"))
+murf_client = Murf(api_key="ap2_686f974a-49a7-41d5-a227-4bedb5301505")
 MURF_VOICE_ID = "en-US-Alicia"  # Natural female voice
 
 def log(message: str, code: int = 200):

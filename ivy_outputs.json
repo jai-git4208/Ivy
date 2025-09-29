@@ -1,17 +1,9 @@
 {
-  "timestamp": "2025-09-28T20:21:14.309031",
-  "prompt": "say Hi in Japanese",
+  "timestamp": "2025-09-28T20:49:03.194929",
+  "prompt": "fuck you",
   "output": {
-    "action": "type",
-    "params": {
-      "type": "type",
-      "text": "\u3053\u3093\u306b\u3061\u306f",
-      "delay": 0.3,
-      "movement": {
-        "x": 8,
-        "y": -1
-      }
-    },
-    "response": "Konnichiwa! That\u2019s \u2018Hi\u2019 in Japanese. Pretty neat, huh?"
+    "action": "none",
+    "params": {},
+    "response": "{\n  \"action\": \"none\",\n  \"params\": {},\n  \"response\": \"Whoa there! That language isn't very friendly. Let's try to keep our interactions positive, okay? How\u2019s your day going so far?\u201d\n}"
   }
 }

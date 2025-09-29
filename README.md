@@ -121,5 +121,9 @@ PRs and ideas are welcome! Fork this repo, hack Ivy, and share improvements.
 
 ## 📜 License
 
-MIT License © 2025 Jaimin & Contributors
+Apache 2.0 License © 2025 Jaimin Pansal
+
+---
+
+Made with ❤️ by **Jaimin**
 

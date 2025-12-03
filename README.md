@@ -462,10 +462,10 @@ Ivy/
 ├── frontend/             # Electron application
 │   ├── package.json
 │   ├── main.js           # Electron main process
-│   ├── renderer.js       # UI logic
+│   ├── script.js       # UI logic
 │   ├── index.html        # Main UI structure
-│   └── styles/
-│       └── orb.css       # Gradient orb styling
+│   └── styles.css.       # Gradient orb styling
+│             
 ├── venv/                 # Python virtual environment
 └── README.md
 ```
